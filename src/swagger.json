@@ -72,6 +72,70 @@
                     }
                 }
             }
+        },
+        "/categories/import":{
+            "post":{
+                "tags": ["Category"],
+                "summary": "Import a list of categories",
+                "description": "Import a list of categories from a .csv file",
+                "requestBody": {
+                    "content": {
+                        "multipart/form-data":{
+                            "schema":{
+                                "type": "object",
+                                "properties":{
+                                    "file":{
+                                        "type":"string",
+                                        "format": "binary"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Created"
+                    }
+                }
+            }
+        },
+        "/specifications":{
+            "post":{
+                "tags": ["Specifications"],
+                "description": "Use this to create a new specification",
+                "summary": "Create a specification",
+                "requestBody":{
+                    "content":{
+                        "application/json":{
+                            "schema": {
+                                "$ref": "#definitions/Specification"
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description":"Created"
+                    },
+                    "500":{
+                        "description": "Specification already exists"
+                    }
+                }
+            }
+        }
+    },
+    "definitions":{
+        "Specification":{
+            "type":"object",
+            "properties":{
+                "name":{
+                    "type":"string"
+                },
+                "description":{
+                    "type":"string"
+                }
+            }
         }
     }
 }
