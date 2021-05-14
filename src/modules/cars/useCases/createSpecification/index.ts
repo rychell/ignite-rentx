@@ -1,4 +1,5 @@
-import { SpecificationsRepository } from "../../repositories/implementations/SpecificationRepository";
+import { SpecificationsRepository } from "@modules/cars/infra/typeorm/repositories/SpecificationRepository";
+
 import { CreateSpecificationController } from "./CreateSpecificationController";
 import { CreateSpecificationUseCase } from "./CreateSpecificationUseCase";
 
@@ -8,8 +9,6 @@ const createSpecificationUseCase = new CreateSpecificationUseCase(
   specificationsRepository
 );
 
-const createSpecificationController = new CreateSpecificationController(
-  createSpecificationUseCase
-);
+const createSpecificationController = new CreateSpecificationController();
 
 export { createSpecificationController };
