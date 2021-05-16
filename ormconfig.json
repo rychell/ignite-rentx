@@ -1,13 +1,29 @@
-{
-    "type": "postgres",
-    "port": 5432,
-    "host": "localhost",
-    "username": "docker",
-    "password": "docker",
-    "database": "rentalx",
-    "migrations": ["./src/shared/infra/typeorm/migrations/*.ts"],
-    "entities": ["./src/modules/**/entities/*.ts"],
-    "cli":{
-        "migrationsDir": "./src/shared/infra/typeorm/migrations"
+[{
+        "type": "postgres",
+        "port": 5432,
+        "host": "localhost",
+        "username": "docker",
+        "password": "docker",
+        "database": "rentalx",
+        "migrations": ["./src/shared/infra/typeorm/migrations/*.ts",
+            "./src/shared/infra/typeorm/seeds/*.ts"
+        ],
+        "entities": ["./src/modules/**/entities/*.ts"],
+        "cli": {
+            "migrationsDir": "./src/shared/infra/typeorm/migrations"
+        }
+    },
+    {
+        "name": "seed",
+        "type": "postgres",
+        "port": 5432,
+        "host": "localhost",
+        "username": "docker",
+        "password": "docker",
+        "database": "rentalx",
+        "migrations": ["./src/shared/infra/typeorm/seeds/*.ts"],
+        "cli": {
+            "migrationsDir": "./src/shared/infra/typeorm/seeds"
+        }
     }
-}
+]
