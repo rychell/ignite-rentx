@@ -1,14 +1,16 @@
 import { CarsRepositoryInMemory } from "@modules/cars/repositories/in-memory/CarsRepositoryInMemory";
 import { generateRandomNumber, generateRandomString } from "@utils/generators";
 
-import { ListCarsUseCase } from "./ListCarsUseCase";
+import { ListAvailableCarsUseCase } from "./ListAvailableCarsUseCase";
 
-let listCarsUseCase: ListCarsUseCase;
+let listAvailableCarsUseCase: ListAvailableCarsUseCase;
 let carRepositoryInMemory: CarsRepositoryInMemory;
 describe("List cars", () => {
   beforeEach(() => {
     carRepositoryInMemory = new CarsRepositoryInMemory();
-    listCarsUseCase = new ListCarsUseCase(carRepositoryInMemory);
+    listAvailableCarsUseCase = new ListAvailableCarsUseCase(
+      carRepositoryInMemory
+    );
   });
   it("should be able to list all available cars", async () => {
     const randomCar = () => ({
@@ -27,7 +29,7 @@ describe("List cars", () => {
       id: car2.id,
       availability: false,
     });
-    const result = await listCarsUseCase.execute();
+    const result = await listAvailableCarsUseCase.execute();
 
     expect(result).toEqual([car1]);
   });
@@ -55,7 +57,7 @@ describe("List cars", () => {
 
     car6.setAvailability(false);
 
-    const result = await listCarsUseCase.execute({ name: car1.name });
+    const result = await listAvailableCarsUseCase.execute({ name: car1.name });
 
     expect(result).toEqual([car1]);
   });
@@ -83,7 +85,9 @@ describe("List cars", () => {
 
     car6.setAvailability(false);
 
-    const result = await listCarsUseCase.execute({ brand: car1.brand });
+    const result = await listAvailableCarsUseCase.execute({
+      brand: car1.brand,
+    });
 
     expect(result).toEqual([car1]);
   });
@@ -111,7 +115,7 @@ describe("List cars", () => {
 
     car6.setAvailability(false);
 
-    const result = await listCarsUseCase.execute({
+    const result = await listAvailableCarsUseCase.execute({
       category_id: car1.category_id,
     });
 

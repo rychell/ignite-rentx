@@ -14,8 +14,30 @@ class CarsRepository implements ICarsRepository {
   setAvailability(data: { id: string; availability: boolean }): Promise<Car> {
     throw new Error("Method not implemented.");
   }
-  async findAllAvailable(): Promise<Car[]> {
-    return this.repository.find({ available: true });
+  async findAllAvailable(data?: {
+    name?: string;
+    brand?: string;
+    category_id?: string;
+  }): Promise<Car[]> {
+    const name = data?.name;
+    const brand = data?.brand;
+    const category_id = data?.category_id;
+
+    const carsQuery = await this.repository
+      .createQueryBuilder("cars")
+      .where("available = :available", { available: true });
+
+    if (brand) {
+      carsQuery.where("cars.brand = :brand", { brand });
+    }
+    if (name) {
+      carsQuery.where("cars.name = :name", { name });
+    }
+    if (category_id) {
+      carsQuery.where("cars.category_id = :category_id", { category_id });
+    }
+
+    return carsQuery.getMany();
   }
   async create({
     name,
