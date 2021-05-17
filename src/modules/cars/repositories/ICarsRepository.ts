@@ -9,6 +9,7 @@ interface ICarsRepository {
     brand?: string;
     category_id?: string;
   }): Promise<Car[]>;
+  findById(id: string): Promise<Car>;
   setAvailability(data: { id: string; availability: boolean }): Promise<Car>;
 }
 
