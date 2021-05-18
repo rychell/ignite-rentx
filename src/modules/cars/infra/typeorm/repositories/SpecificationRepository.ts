@@ -11,18 +11,31 @@ class SpecificationsRepository implements ISpecificationRepository {
   constructor() {
     this.repository = getRepository(Specification);
   }
-  async create({ name, description }: ICreateCategoryDTO): Promise<void> {
+  async create({
+    name,
+    description,
+  }: ICreateCategoryDTO): Promise<Specification> {
     const specification = this.repository.create({
       description,
       name,
     });
 
     await this.repository.save(specification);
+    return specification;
   }
   async findByName(name: string): Promise<Specification> {
     const specification = await this.repository.findOne({ name });
 
     return specification;
+  }
+  async findById(id: string | string[]): Promise<Specification[]> {
+    let searchIdsArray: string[] = [];
+    if (!Array.isArray(id)) {
+      searchIdsArray = [id];
+    } else {
+      searchIdsArray = id;
+    }
+    return this.repository.findByIds(searchIdsArray);
   }
 }
 
