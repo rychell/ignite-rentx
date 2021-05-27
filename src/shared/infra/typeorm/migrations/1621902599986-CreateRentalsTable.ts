@@ -22,14 +22,21 @@ export class CreateRentalsTable1621900855018 implements MigrationInterface {
           {
             name: "start_date",
             type: "timestamp",
+            default: "now()",
           },
           {
             name: "end_date",
+            type: "timestamp",
+            isNullable: true,
+          },
+          {
+            name: "expected_return_date",
             type: "timestamp",
           },
           {
             name: "total",
             type: "numeric",
+            isNullable: true,
           },
           {
             name: "created_at",
