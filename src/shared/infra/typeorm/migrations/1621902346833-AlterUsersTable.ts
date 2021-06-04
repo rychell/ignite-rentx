@@ -9,6 +9,7 @@ export class AlterUsersTable1621902346833 implements MigrationInterface {
         name: "id",
         type: "uuid",
         isPrimary: true,
+        isUnique: true
       })
     );
   }
@@ -21,6 +22,7 @@ export class AlterUsersTable1621902346833 implements MigrationInterface {
         name: "id",
         type: "uuid",
         isPrimary: false,
+        isUnique: false
       })
     );
   }
