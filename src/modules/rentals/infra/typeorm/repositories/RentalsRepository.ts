@@ -20,16 +20,19 @@ class RentalsRepository implements IRentalsRepository {
       user_id,
       expected_return_date,
     });
-
+    
     await this.repository.save(rental);
-
+    
     return rental;
   }
   findOpenRentalByUser(user_id: string): Promise<Rental> {
-    return this.repository.findOne({ user_id });
+    return this.repository.findOne({ user_id, end_date: null });
   }
   findOpenRentalByCar(car_id: string): Promise<Rental> {
-    return this.repository.findOne({ car_id });
+    return this.repository.findOne({ car_id, end_date: null });
+  }
+  findById(id: string): Promise<Rental> {
+    throw this.repository.findOne({id})
   }
 }
 

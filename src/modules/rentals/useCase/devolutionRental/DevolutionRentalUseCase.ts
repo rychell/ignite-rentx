@@ -1,12 +1,13 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppErrors";
-import { inject } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import {dayDiff} from './../../../../utils/date'
 interface IRequest{
     rental_id: string
-    car_id: string
+    user_id: string
 }
+@injectable()
 class DevolutionRentalUseCase {
     constructor(
         @inject("RentalsRepository")
@@ -15,9 +16,9 @@ class DevolutionRentalUseCase {
         private carsRepository: ICarsRepository
     ){}
 
-    async execute({rental_id, car_id}:IRequest){
+    async execute({rental_id, user_id}:IRequest){
         const rental = await this.rentalsRepository.findById(rental_id)
-        const car = await this.carsRepository.findById(car_id)
+        const car = await this.carsRepository.findById(rental.car_id)
         if(!rental){
             throw new AppError("Rental does not exists")
         }
@@ -37,7 +38,7 @@ class DevolutionRentalUseCase {
 
         await this.rentalsRepository.create(rental)
         await this.carsRepository.setAvailability({
-            id: car_id,
+            id: user_id,
             availability: true
         })
 
