@@ -27,6 +27,5 @@ Fico a disposição para conversar mais sobre o assunto
 
 
 
-
-
+trabalhar com Transactions. No modulo 5 houve um exemplo de setar o carro como indisponível mas nada garantia que a outra operação iria funcionar.
 

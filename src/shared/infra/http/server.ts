@@ -34,6 +34,8 @@ app.use(
   }
 );
 app.get("/", (request, response) => {
+  console.log("Listening");
+  
   return response.status(201).json(true);
 });
 

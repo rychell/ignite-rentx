@@ -11,9 +11,7 @@ class CarsRepository implements ICarsRepository {
   constructor() {
     this.repository = getRepository(Car);
   }
-  setAvailability(data: { id: string; availability: boolean }): Promise<Car> {
-    throw new Error("Method not implemented.");
-  }
+
   async findAllAvailable(data?: {
     name?: string;
     brand?: string;
@@ -67,6 +65,10 @@ class CarsRepository implements ICarsRepository {
   }
   async findById(id: string): Promise<Car> {
     return this.repository.findOne({ id });
+  }
+  async setAvailability(data: { id: string; availability: boolean }): Promise<Car> {
+    await this.repository.createQueryBuilder().update().set({available: data.availability}).where("id =:id").setParameters({id: data.id}).execute()
+    return this.repository.findOne({id: data.id})
   }
 }
 
