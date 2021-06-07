@@ -1,4 +1,5 @@
 import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
+import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppErrors";
 import { inject, injectable } from "tsyringe";
@@ -16,12 +17,13 @@ class DevolutionRentalUseCase {
         private carsRepository: ICarsRepository
     ){}
 
-    async execute({rental_id, user_id}:IRequest){
+    async execute({rental_id, user_id}:IRequest): Promise<Rental>{
         const rental = await this.rentalsRepository.findById(rental_id)
-        const car = await this.carsRepository.findById(rental.car_id)
+        
         if(!rental){
             throw new AppError("Rental does not exists")
         }
+        const car = await this.carsRepository.findById(rental.car_id)
         
         const expectedRentalTimeInDays = dayDiff(rental.expected_return_date, rental.start_date)
         const rentalTimeInDays = dayDiff(new Date(), rental.start_date);

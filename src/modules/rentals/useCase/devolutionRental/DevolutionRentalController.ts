@@ -9,13 +9,13 @@ class DevolutionRentalController{
         const {id: rental_id} = request.params
 
         const devolutionRentalUseCase = container.resolve(DevolutionRentalUseCase)
-
+        
         const devolution = await devolutionRentalUseCase.execute({
             rental_id,
             user_id
         })
 
-        return devolution
+        return response.json(devolution)
     }
 }
 // Falta ainda criar a rota e ajeitar o useCase. Acredito que o melhor seja escrever os teste de integração para já validar todas as regras de negócio
