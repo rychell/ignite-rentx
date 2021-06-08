@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
 
+import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 import { ICreateRentalDTO } from "@modules/rentals/dtos/ICreateHandleDTO";
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppErrors";
 import { hourDiff } from "@utils/date";
-import { ICarsRepository } from "@modules/cars/repositories/ICarsRepository";
 
 @injectable()
 class CreateRentalUseCase {
@@ -14,7 +14,7 @@ class CreateRentalUseCase {
     private rentalsRepository: IRentalsRepository,
     @inject("CarsRepository")
     private carsRepository: ICarsRepository
-    ) {}
+  ) {}
   async execute({
     car_id,
     user_id,
@@ -47,8 +47,8 @@ class CreateRentalUseCase {
     }
     await this.carsRepository.setAvailability({
       id: car_id,
-      availability: false
-    })  
+      availability: false,
+    });
 
     return this.rentalsRepository.create({
       car_id,
